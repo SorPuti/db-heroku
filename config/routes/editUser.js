@@ -11,8 +11,14 @@ var token = function () {
 
 async function editUser(req, res) {
     const userId = req.params.userId
-    const key = req.params.key
-    const value = req.params.value
+    const body = req.body
+    if (!body)
+        return res.send(JSON.stringify({
+            result: 'body not found'
+        })).end()
+        
+    const key = body.key
+    const value = body.value
 
     if (!userId && !key && !value)
         return res.status(404).send(JSON.stringify({

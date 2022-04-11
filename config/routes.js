@@ -23,17 +23,17 @@ function read() {
 
     routes.get('/user/:userId', getUser)
 
-    routes.get('/user/:userId/edit/:key/:value', editUser)
+    routes.get('/user/:userId/edit/', editUser)
 
     routes.delete('/users/:userID/delete', deleteUser)
 
-    routes.get('/user/:userId/check/:password', checkPassword)
+    routes.get('/user/:userId/check', checkPassword)
 
     {/* User Actions */ }
 
-    routes.post('/user/add/:email/:password', addUser)
+    routes.post('/user/add', addUser)
 
-    routes.delete('/users/:userID/accounts/:accountID', deleteAccount)
+    routes.delete('/users/:userID/deleteAccount', deleteAccount)
 
 
     {/* LOGGER */ }

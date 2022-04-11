@@ -3,7 +3,14 @@ const User = require('../../models/User')
 
 function checkPassword(req, res) {
     const userId = req.params.userId
-    const password = req.params.password
+    const body = req.body
+
+    if (!body)
+        return res.send(JSON.stringify({
+            result: 'body not found'
+        })).end()
+    const password = body.password
+    
     if (!userId)
         return res.status(404).send(JSON.stringify({
             result: 'error'

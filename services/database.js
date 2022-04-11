@@ -27,10 +27,6 @@ async function searchId(email) {
     }
 }
 
-reader(() => {
-    console.log('READ');
-})
-
 async function reader(read = () => { }) {
     connection = await database.connect({
         host: config.props.host,
@@ -120,6 +116,7 @@ async function users() {
         const response = await all();
         const users = []
         for (const userId of response) {
+            console.log(userId)
             const user = await get(userId)
             if (user)
                 users.push(user)

@@ -1,9 +1,9 @@
 {
     "props":{
-        "host": "database-1.chywkl3oafeq.sa-east-1.rds.amazonaws.com",
-        "password": "9Byj0bnjo7xOze41THXw",
-        "user": "admin",
-        "database": "devchamps",
+        "host": "localhost",
+        "password": "",
+        "user": "root",
+        "database": "test",
         "port": "3306"
     },
     "table": "users"

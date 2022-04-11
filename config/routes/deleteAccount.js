@@ -2,7 +2,13 @@ const { get } = require('../../services/database')
 const User = require('../../models/User')
 
 function deleteAccount(req, res) {
-    const accountId = req.params.accountID
+    const body = req.body
+
+    if (!body)
+        return res.send(JSON.stringify({
+            result: 'body not found'
+        })).end()
+    const accountId = body.accountID
     const userId = req.params.userID
 
     get(userId).then((data) => {

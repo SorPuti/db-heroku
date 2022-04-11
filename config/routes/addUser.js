@@ -10,8 +10,15 @@ var token = function () {
 };
 
 function addUser(req, res) {
-    const password = req.params.password
-    const email = req.params.email
+    const body = req.body
+
+    if (!body)
+        return res.send(JSON.stringify({
+            result: 'body not found'
+        })).end()
+
+    const password = body.password
+    const email = body.email
 
     if (!email || !password)
         return res.status(404).end()
