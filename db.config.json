@@ -1,0 +1,9 @@
+{
+    "props":{
+        "host": "localhost",
+        "password": "",
+        "user": "root",
+        "database": "test"
+    },
+    "table": "users"
+}
