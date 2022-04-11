@@ -8,6 +8,8 @@ var connection
 async function loadCache() {
     emailsCache = new Map()
     const listUsers = await users()
+    if (!listUsers)
+        return;
     for (const user of listUsers)
         emailsCache.set(user.user['email'], user.userId)
 
@@ -25,10 +27,14 @@ async function searchId(email) {
     }
 }
 
+reader(() => {
+    console.log('READ');
+})
+
 async function reader(read = () => { }) {
     connection = await database.connect({
         host: config.props.host,
-        port: '3306',
+        port: config.props.port,
         user: config.props.user,
         password: config.props.password,
         database: config.props.database
@@ -102,7 +108,7 @@ async function dump(userId) {
         const response = Boolean(emailsCache.has(data['user'].email));
         if (response)
             emailsCache.delete(data['user'].email)
-        
+
         await connection.delete(config.table, `${userId}`);
     } catch (error) {
         console.log('Falha ao recebe requisição, mensagem: ' + error);

@@ -11,7 +11,7 @@ function deleteUser(req, res) {
         if (!data)
             return res.status(404).end()
 
-        dump(userId).then(() => {
+        dump(data.userId).then(() => {
             return res.send(JSON.stringify({
                 result: 'sucess'
             })).end()
