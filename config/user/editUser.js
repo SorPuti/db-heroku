@@ -1,4 +1,4 @@
-const { update, get } = require('../../services/database')
+const { update, get, change } = require('../../services/user_database')
 const User = require('../../models/User')
 
 var rand = function () {
@@ -9,23 +9,19 @@ var token = function () {
     return rand() + rand();
 };
 
+
+
 async function editUser(req, res) {
     const userId = req.params.userId
-    const body = req.body
-    if (!body)
-        return res.send(JSON.stringify({
-            result: 'body not found'
-        })).end()
-        
-    const key = body.key
-    const value = body.value
+    const key = req.params.key
+    const value = req.params.value
 
-    if (!userId && !key && !value)
+    if (!userId || !key && !value)
         return res.status(404).send(JSON.stringify({
             result: 'error'
         })).end()
 
-    //    console.log(`This userId ${userId} query edit to ** ${key} ** for  ** ${value} **.`);
+    console.log(`This userId ${userId} query edit to ** ${key} ** for  ** ${value} **.`);
 
     if (key.toString('utf8').includes('async_accounts') || key.toString('utf8').includes('permissions'))
         return res.status(404).send(JSON.stringify({
@@ -40,6 +36,7 @@ async function editUser(req, res) {
 
         const user = User.valueOf((userId.includes('@') ? data.userId : userId), data)
         user.key(key, value)
+        change(data, user)
         update(user)
 
         return res.send(JSON.stringify({

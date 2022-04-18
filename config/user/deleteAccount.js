@@ -1,4 +1,4 @@
-const { get } = require('../../services/database')
+const { get } = require('../../services/user_database')
 const User = require('../../models/User')
 
 function deleteAccount(req, res) {
@@ -13,7 +13,9 @@ function deleteAccount(req, res) {
 
     get(userId).then((data) => {
         if (!data)
-            return res.status(404).end()
+            return res.send(JSON.stringify({
+                 result: 'error'
+            })).end()
 
         const user = User.valueOf(data)
         user.remove(accountId)

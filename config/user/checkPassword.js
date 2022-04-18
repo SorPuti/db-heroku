@@ -1,34 +1,28 @@
-const { get } = require('../../services/database')
+const { get } = require('../../services/user_database')
 const User = require('../../models/User')
 
 function checkPassword(req, res) {
     const userId = req.params.userId
-    const body = req.body
-
-    if (!body)
-        return res.send(JSON.stringify({
-            result: 'body not found'
-        })).end()
-    const password = body.password
+    const password = req.params.password
     
-    if (!userId)
-        return res.status(404).send(JSON.stringify({
-            result: 'error'
+    if (!userId || !password)
+        return res.send(JSON.stringify({
+            result: 'userId or password incorrect!'
         })).end()
 
     get(userId).then((data) => {
         if (!data)
-            return res.status(404).send(JSON.stringify({
+            return res.send(JSON.stringify({
                 result: 'error'
             })).end()
 
         const user = User.valueOf(userId, data)
 
-        if (password == user.password)
+        if (password === user.password)
             return res.send(JSON.stringify({
                 result: 'sucess'
             })).end()
-        return res.status(404).send(JSON.stringify({
+        return res.send(JSON.stringify({
             result: 'error'
         })).end()
     })

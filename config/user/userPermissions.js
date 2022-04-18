@@ -14,13 +14,18 @@ async function userPermissions(req, res) {
     const permission = req.params.permission
 
     if (!userId && !permission)
-        return res.status(404).send(JSON.stringify({
+        return res.send(JSON.stringify({
             result: 'error'
         })).end()
 
     //    console.log(`This userId ${userId} query edit to ** ${key} ** for  ** ${value} **.`);
 
     get(userId).then(data => {
+        if (!data)
+            return res.send(JSON.stringify({
+                result: 'error'
+            })).end()
+            
         const user = User.valueOf(userId, data)
         if (user.hasPermissions(permission))
             return res.send(JSON.stringify({

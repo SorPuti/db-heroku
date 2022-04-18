@@ -6,5 +6,6 @@
         "database": "devchamps",
         "port": "3306"
     },
-    "table": "users"
+    "user_table": "users",
+    "app_table": "application"
 }

@@ -11,8 +11,8 @@ app.use(express.json())
 app.use(cors())
 app.use(routes)
 
-const port = (process.env.port || 25565)
+const port = (process.env.PORT || 25565)
 
 app.listen(port, () => {
-    console.log(`Application loaded in https://localhost:${port}/`);
+    console.log(`Application loaded in port ${port}`);
 })

@@ -8,12 +8,12 @@ var clazz = class User {
     }
 
     static valueOf(userId, json) {
-        if (!userId && !json)
+        if (!userId)
             return null
         const user = new User(userId)
         if (json) {
             user.setup(json.user['firstName'], json.user['email'], [], json['password'])
-            for (const account of json.user['async_accounts'])
+            for (const account of json.user.async_accounts)
                 user.add(Account.valueOf(account))
         } else
             user.setup()
@@ -25,9 +25,15 @@ var clazz = class User {
             this.user[key] = value
     }
 
+
+    setAccountLevel(account_level) {
+        this.user.account_level = account_level
+    }
+    
     setup(firstName, email, async_accounts, password) {
         this.password = (password ? password : '123456')
         this.user = {
+            account_level: 'VIP1',
             firstName: (firstName ? firstName : undefined),
             email: (email ? email : undefined),
             async_accounts: (async_accounts ? async_accounts : []),

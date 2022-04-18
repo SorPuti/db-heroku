@@ -1,25 +1,21 @@
 var clazz = class Account {
-    constructor(accountId) {
-        this.accountId = accountId
-        this.setup()
+    constructor(number, password, productId, amount, date) {
+        this.setup(number, password, productId, amount, date)
     }
 
-    setup(number, password, was_investor) {
-        this.props = {
-            number: (number ? number : undefined),
-            password: (password ? password : undefined),
-            was_investor: (was_investor ? was_investor : 1000)
-        }
+    setup(number, password, productId, amount, date) {
+        this.number = (number ? number : undefined)
+        this.password = (password ? password : undefined)
+        this.productId = (productId ? productId : -1)
+        this.amount = (amount ? amount : -1)
+        this.date = (date ? date : new Date().toLocaleDateString())
     }
 
 
-    static valueOf(accountId, json) {
-        const account = new Account(accountId.accountId)
+    static valueOf(json) {
+        const account = new Account()
         if (json)
-            account.setup(json['number'], json['password'], json['was_investor'])
-        else
-            account.setup()
-
+            account.setup(json['number'], json['password'], json['productId'], json['amount'])
         return account
     }
     getNumber() {

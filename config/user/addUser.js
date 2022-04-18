@@ -1,4 +1,4 @@
-const { update, hasUser } = require('../../services/database')
+const { update, hasUser } = require('../../services/user_database')
 const User = require('../../models/User')
 
 var rand = function () {
@@ -10,15 +10,9 @@ var token = function () {
 };
 
 function addUser(req, res) {
-    const body = req.body
 
-    if (!body)
-        return res.send(JSON.stringify({
-            result: 'body not found'
-        })).end()
-
-    const password = body.password
-    const email = body.email
+    const password = req.params.password
+    const email = req.params.email
 
     if (!email || !password)
         return res.status(404).end()
@@ -27,14 +21,16 @@ function addUser(req, res) {
     user.setup('Cliente', email, [], password)
     if (hasUser(user))
         return res.send(JSON.stringify({
-            result: 'User already exists'
+            result: 'alread exist account'
         })).end()
 
     if (!user)
-        return res.status(404).end()
+        return res.send(JSON.stringify({
+            result: 'error'
+        })).end()
 
     update(user).then(() => {
-        return res.status(200).send(JSON.stringify({
+        return res.send(JSON.stringify({
             result: 'sucess'
         })).end()
     })
